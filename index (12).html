@@ -1,0 +1,805 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Best Homes C, S.L. — Parcel·la nº11.1, Coma del Quico · Sispony, Andorra</title>
+  <meta name="description" content="Casa de lujo en Sispony, Parròquia de La Massana, Andorra. 4 suites, orientación sur, garaje para 4 coches, jardín 133m², a 1.315m de altitud." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Crimson+Pro:wght@300;400;600&display=swap" rel="stylesheet" />
+  <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { background: #0e0e0e; color: #f5f0e8; font-family: 'Crimson Pro', serif; overflow-x: hidden; }
+    ::selection { background: rgba(212,175,55,0.3); }
+    ::-webkit-scrollbar { width: 3px; }
+    ::-webkit-scrollbar-thumb { background: #d4af37; border-radius: 2px; }
+    input, textarea, button { font-family: inherit; }
+    .spec-card { transition: all 0.3s; }
+    .spec-card:hover { transform: translateY(-3px); }
+    .gthumb .gover { opacity: 0; transition: opacity 0.3s; }
+    .gthumb:hover .gover { opacity: 1 !important; }
+    .nav-btn:hover { color: #d4af37 !important; }
+    .cta-gold { background: #d4af37 !important; transition: opacity 0.2s; }
+    .cta-gold:hover { opacity: 0.88; }
+    .outline-btn:hover { background: rgba(255,255,255,0.05) !important; }
+    .mob-link:hover { color: #d4af37 !important; }
+    .wa-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(37,211,102,0.4) !important; }
+    .call-btn:hover { background: rgba(212,175,55,0.1) !important; }
+    .maps-btn:hover { background: rgba(212,175,55,0.08) !important; }
+    @media (max-width: 480px) {
+      .hero-btns { flex-direction: column !important; }
+      .hero-btns a, .hero-btns button { width: 100% !important; text-align: center; }
+    }
+    #root { min-height: 100vh; }
+
+    /* Loading screen — visible hasta que React monta */
+    #loading-screen {
+      position: fixed; inset: 0; z-index: 99999;
+      background: #0e0e0e;
+      display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1.5rem;
+      transition: opacity 0.5s ease;
+    }
+    #loading-screen.hidden { opacity: 0; pointer-events: none; }
+    .loading-logo {
+      font-family: 'Cormorant Garamond', serif; font-size: 1.1rem;
+      letter-spacing: 0.2em; color: #f5f0e8; text-align: center;
+    }
+    .loading-sub {
+      font-family: 'Crimson Pro', serif; font-size: 0.5rem;
+      letter-spacing: 0.35em; color: rgba(212,175,55,0.6); text-transform: uppercase;
+    }
+    .loading-bar-wrap {
+      width: 120px; height: 1px; background: rgba(212,175,55,0.15); position: relative; overflow: hidden;
+    }
+    .loading-bar {
+      position: absolute; top: 0; left: -100%; width: 100%; height: 100%;
+      background: linear-gradient(90deg, transparent, #d4af37, transparent);
+      animation: loadslide 1.2s ease-in-out infinite;
+    }
+    @keyframes loadslide { to { left: 100%; } }
+  </style>
+</head>
+<body>
+<!-- LOADING SCREEN -->
+<div id="loading-screen">
+  <div>
+    <div class="loading-logo">BEST HOMES C, S.L.</div>
+    <div class="loading-sub" style="margin-top:6px;">Coma del Quico · Sispony · La Massana</div>
+  </div>
+  <div class="loading-bar-wrap"><div class="loading-bar"></div></div>
+</div>
+
+<div id="root"></div>
+<script type="text/babel">
+  const { useState, useEffect, useRef, useCallback } = React;
+
+  /* ─────────────────────────────────────────
+     WHATSAPP
+  ───────────────────────────────────────── */
+  const WA_NUMBER = "376XXXXXXX"; // TODO: número real
+  const WA_MSG = {
+    cat: "Hola! M'interessa la propietat Coma del Quico nº11.1 a Sispony. M'agradaria obtenir més informació i concertar una visita.",
+    es:  "Hola! Me interesa la propiedad Coma del Quico nº11.1 en Sispony. Me gustaría más información y concertar una visita.",
+    en:  "Hello! I'm interested in the Coma del Quico nº11.1 property in Sispony. I'd like more info and to schedule a viewing."
+  };
+  const waLink = (l) => `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(WA_MSG[l])}`;
+
+  /* ─────────────────────────────────────────
+     ALL CONTENT — every single text keyed by language
+  ───────────────────────────────────────── */
+  const C = {
+    cat: {
+      nav: { property:"Propietat", gallery:"Galeria", location:"Ubicació", contact:"Contacte" },
+
+      hero: {
+        label:    "Obra nova · Sispony, La Massana",
+        title:    "Residència\nde Luxe",
+        subtitle: "Parcel·la nº11.1 a la Urbanització Coma del Quico, al cor dels Pirineus andorrans. 4 suites, jardí propi i garatge per a 6 vehicles.",
+        cta:      "Sol·licitar Visita",
+        scroll:   "Descobrir"
+      },
+
+      specs: {
+        sectionLabel: "Cada detall concebut per a l'excel·lència",
+        heading1:     "Best Homes C, S.L.",
+        heading2:     "Coma del Quico",
+        desc1:        "Espectacular casa independent en construcció a Sispony, parròquia de La Massana. 616,84 m² distribuïts en 4 plantes amb ascensor, orientació sud-est, vistes privilegiades a la vall d'Anyòs i sol tot el dia.",
+        desc2:        "Soterrani de 294,78 m² amb gimnàs, sauna, sky room i garatge per a 6 vehicles. Planta baixa amb cuina-menjador i terrassa-jardí de 150 m². Dues plantes amb 3 suites. Acabats PORCELANOSA, KÄHRS, REYNAERS i SANTOS.",
+        priceLabel:   "Preu de venda",
+        priceValue:   "3.400.000 €",
+        memBtn:       "Memòria de Qualitats"
+      },
+
+      gallery: {
+        title:    "Galeria",
+        subtitle: "Espais dissenyats amb precisió i bellesa",
+        rooms:    ["Saló Principal","Cuina Gourmet","Suite Master","Bany Principal","Terrassa Descoberta","Jardí","Sala de Cine","Gimnàs","Garatge","Vistes Pirineus"]
+      },
+
+      ba: {
+        title:    "Evolució del Projecte",
+        subtitle: "De l'avantprojecte a la realitat",
+        before:   "Abans",
+        after:    "Ara"
+      },
+
+      location: {
+        parishLabel:  "Parròquia de La Massana · AD400",
+        heading1:     "Sispony,",
+        heading2:     "Coma del Quico nº11.1",
+        desc:         "Sispony és una de les zones més exclusives i tranquil·les d'Andorra. A 1.315 metres d'altitud, amb accés directe a Ordino-Arcalís i a pocs minuts d'Andorra la Vella.",
+        distances:    [["5'","Andorra la Vella"],["10'","Ordino-Arcalís"],["2h","Barcelona"],["1.315 m","Altitud"]],
+        mapsBtn:      "Veure a Google Maps",
+        mapCaption:   "📍 Parcel·la nº11.1, Coma del Quico — AD400 Sispony"
+      },
+
+      contact: {
+        title:    "Parlem?",
+        subtitle: "Contacteu-nos directament per WhatsApp",
+        body:     "Estem disponibles per resoldre qualsevol dubte i concertar una visita personal a la propietat. Escriviu-nos i us respondrem de seguida.",
+        waCta:    "Escriu-nos per WhatsApp",
+        divider:  "O truqueu-nos",
+        callBtn:  "+376 XXX XXX",
+        hours:    "Disponibles de dilluns a dissabte, 9h – 20h"
+      },
+
+      footer: {
+        address: "Parcel·la nº11.1 · Coma del Quico · AD400 Sispony · La Massana",
+        legal:   ["Legal","Privacitat","Cookies"],
+        rights:  "Tots els drets reservats"
+      },
+
+      orientation: {
+        label:    "Orientació i llum natural",
+        title:    "Orientació\nSud",
+        desc:     "La residència gaudeix d'una orientació sud privilegiada, captant el màxim de llum solar durant tot el dia. Això garanteix interiors càlids i lluminosos durant les quatre estacions, reduint la necessitat de calefacció i creant ambients extraordinàriament confortables.",
+        stats:    [["270°","Orientació sud-oest"],["8h+","Sol diari en hivern"],["1.315 m","Altitud privilegiada"],["Sud","Façana principal"]]
+      }
+    },
+
+    /* ── ESPAÑOL ── */
+    es: {
+      nav: { property:"Propiedad", gallery:"Galería", location:"Ubicación", contact:"Contacto" },
+
+      hero: {
+        label:    "Obra nueva · Sispony, La Massana",
+        title:    "Residencia\nde Lujo",
+        subtitle: "Parcela nº11.1 en la Urbanización Coma del Quico, en el corazón de los Pirineos andorranos. 4 suites, jardín propio y garaje para 6 vehículos.",
+        cta:      "Solicitar Visita",
+        scroll:   "Descubrir"
+      },
+
+      specs: {
+        sectionLabel: "Cada detalle concebido para la excelencia",
+        heading1:     "Best Homes C, S.L.",
+        heading2:     "Coma del Quico",
+        desc1:        "Espectacular casa independiente en construcción en Sispony, parroquia de La Massana. 616,84 m² distribuidos en 4 plantas con ascensor, orientación sureste, vistas privilegiadas al valle de Anyòs y sol durante todo el día.",
+        desc2:        "Sótano de 294,78 m² con gimnasio, sauna, sky room y garaje para 6 vehículos. Planta baja con cocina-comedor y terraza-jardín de 150 m². Dos plantas con 3 suites. Acabados PORCELANOSA, KÄHRS, REYNAERS y SANTOS.",
+        priceLabel:   "Precio de venta",
+        priceValue:   "3.400.000 €",
+        memBtn:       "Memoria de Calidades"
+      },
+
+      gallery: {
+        title:    "Galería",
+        subtitle: "Espacios diseñados con precisión y belleza",
+        rooms:    ["Salón Principal","Cocina Gourmet","Suite Master","Baño Principal","Terraza Descubierta","Jardín","Sala de Cine","Gimnasio","Garaje","Vistas Pirineos"]
+      },
+
+      ba: {
+        title:    "Evolución del Proyecto",
+        subtitle: "Del anteproyecto a la realidad",
+        before:   "Antes",
+        after:    "Ahora"
+      },
+
+      location: {
+        parishLabel:  "Parroquia de La Massana · AD400",
+        heading1:     "Sispony,",
+        heading2:     "Coma del Quico nº11.1",
+        desc:         "Sispony es una de las zonas más exclusivas y tranquilas de Andorra. A 1.315 metros de altitud, con acceso directo a Ordino-Arcalís y a pocos minutos de Andorra la Vella.",
+        distances:    [["5'","Andorra la Vella"],["10'","Ordino-Arcalís"],["2h","Barcelona"],["1.315 m","Altitud"]],
+        mapsBtn:      "Ver en Google Maps",
+        mapCaption:   "📍 Parcela nº11.1, Coma del Quico — AD400 Sispony"
+      },
+
+      contact: {
+        title:    "¿Hablamos?",
+        subtitle: "Contáctenos directamente por WhatsApp",
+        body:     "Estamos disponibles para resolver cualquier duda y concertar una visita personal a la propiedad. Escríbanos y le responderemos enseguida.",
+        waCta:    "Escríbenos por WhatsApp",
+        divider:  "O llámenos",
+        callBtn:  "+376 XXX XXX",
+        hours:    "Disponibles de lunes a sábado, 9h – 20h"
+      },
+
+      footer: {
+        address: "Parcela nº11.1 · Coma del Quico · AD400 Sispony · La Massana",
+        legal:   ["Legal","Privacidad","Cookies"],
+        rights:  "Todos los derechos reservados"
+      },
+
+      orientation: {
+        label:    "Orientación y luz natural",
+        title:    "Orientación\nSur",
+        desc:     "La residencia disfruta de una orientación sur privilegiada, captando el máximo de luz solar durante todo el día. Esto garantiza interiores cálidos y luminosos en las cuatro estaciones, reduciendo la necesidad de calefacción y creando ambientes extraordinariamente confortables.",
+        stats:    [["270°","Orientación suroeste"],["8h+","Sol diario en invierno"],["1.315 m","Altitud privilegiada"],["Sur","Fachada principal"]]
+      }
+    },
+
+    /* ── ENGLISH ── */
+    en: {
+      nav: { property:"Property", gallery:"Gallery", location:"Location", contact:"Contact" },
+
+      hero: {
+        label:    "New build · Sispony, La Massana",
+        title:    "Luxury\nResidence",
+        subtitle: "Plot nº11.1 in the Coma del Quico urbanisation, in the heart of the Andorran Pyrenees. 4 suites, private garden and garage for 6 vehicles.",
+        cta:      "Request Viewing",
+        scroll:   "Discover"
+      },
+
+      specs: {
+        sectionLabel: "Every detail conceived for excellence",
+        heading1:     "Best Homes C, S.L.",
+        heading2:     "Coma del Quico",
+        desc1:        "Spectacular detached house under construction in Sispony, Parish of La Massana. 616.84 m² spread over 4 floors with lift, southeast orientation, privileged views of the Anyòs valley and sun throughout the day.",
+        desc2:        "Basement of 294.78 m² with gym, sauna, sky room and garage for 6 vehicles. Ground floor with kitchen-dining room and 150 m² garden terrace. Two floors with 3 suites. PORCELANOSA, KÄHRS, REYNAERS and SANTOS finishes.",
+        priceLabel:   "Sale price",
+        priceValue:   "3,400,000 €",
+        memBtn:       "Quality Specifications"
+      },
+
+      gallery: {
+        title:    "Gallery",
+        subtitle: "Spaces designed with precision and beauty",
+        rooms:    ["Main Living Room","Gourmet Kitchen","Master Suite","Main Bathroom","Open Terrace","Garden","Home Cinema","Gym","Garage","Pyrenees Views"]
+      },
+
+      ba: {
+        title:    "Project Evolution",
+        subtitle: "From concept to reality",
+        before:   "Before",
+        after:    "Now"
+      },
+
+      location: {
+        parishLabel:  "Parish of La Massana · AD400",
+        heading1:     "Sispony,",
+        heading2:     "Coma del Quico nº11.1",
+        desc:         "Sispony is one of the most exclusive and peaceful areas of Andorra. At 1,315 metres altitude, with direct access to Ordino-Arcalís and just minutes from Andorra la Vella.",
+        distances:    [["5'","Andorra la Vella"],["10'","Ordino-Arcalís"],["2h","Barcelona"],["1,315 m","Altitude"]],
+        mapsBtn:      "View on Google Maps",
+        mapCaption:   "📍 Plot nº11.1, Coma del Quico — AD400 Sispony"
+      },
+
+      contact: {
+        title:    "Let's Talk",
+        subtitle: "Contact us directly via WhatsApp",
+        body:     "We are available to answer any questions and arrange a personal visit to the property. Message us and we will get back to you right away.",
+        waCta:    "Message us on WhatsApp",
+        divider:  "Or call us",
+        callBtn:  "+376 XXX XXX",
+        hours:    "Available Monday to Saturday, 9am – 8pm"
+      },
+
+      footer: {
+        address: "Plot nº11.1 · Coma del Quico · AD400 Sispony · La Massana",
+        legal:   ["Legal","Privacy","Cookies"],
+        rights:  "All rights reserved"
+      },
+
+      orientation: {
+        label:    "Orientation & natural light",
+        title:    "South-Facing\nResidence",
+        desc:     "The residence enjoys a privileged south-facing orientation, capturing maximum sunlight throughout the day. This ensures warm, bright interiors across all four seasons, reducing heating requirements and creating extraordinarily comfortable living spaces.",
+        stats:    [["270°","Southwest orientation"],["8h+","Daily sun in winter"],["1,315 m","Privileged altitude"],["South","Main façade"]]
+      }
+    }
+  };
+
+  /* spec row labels — translated */
+  const specLabels = {
+    cat: ["Suites","Garatge","Terreny","Soterrani","Pl. Baixa","Planta 1 + 2","Sup. total","Parròquia"],
+    es:  ["Suites","Garaje","Terreno","Sótano","Pl. Baja","Planta 1 + 2","Sup. total","Parroquia"],
+    en:  ["Suites","Garage","Land","Basement","Ground fl.","Floor 1 + 2","Total area","Parish"]
+  };
+  const specIcons  = ["⌂","▣","◇","◻","▤","◈","▲","✦"];
+
+  /* FIX 1: Garage value translated per language */
+  const specGarageValues = {
+    cat: "4 cotxes + 2 motos",
+    es:  "4 coches + 2 motos",
+    en:  "4 cars + 2 motorbikes"
+  };
+
+  /* FIX 2: 1st+2nd floor value */
+  const specFloorValues = {
+    cat: "126,58 + 69,08 m² + 6,54 m² terrassa",
+    es:  "126,58 + 69,08 m² + 6,54 m² terraza",
+    en:  "126.58 + 69.08 m² + 6.54 m² terrace"
+  };
+
+  const specValuesBase = ["4", null, "438,95 m²", "294,78 m²", "126,40 m²", null, "616,84 m²", "La Massana"];
+
+  const roomColors = [
+    ["#1a1a2e","#16213e"],["#0f3460","#1a1a2e"],["#533483","#1a1a2e"],
+    ["#2c1810","#1a0a05"],["#0d1b2a","#1b4332"],["#1a0533","#2d1b69"],
+  ];
+
+  /* ─── HOOKS ─── */
+  function useIsMobile(bp=768) {
+    const [m,setM] = useState(window.innerWidth < bp);
+    useEffect(()=>{
+      const h=()=>setM(window.innerWidth<bp);
+      window.addEventListener("resize",h);
+      return ()=>window.removeEventListener("resize",h);
+    },[bp]);
+    return m;
+  }
+
+  /* ─── ROOM PLACEHOLDER ─── */
+  function RoomBox({ index, label }) {
+    const [c1,c2] = roomColors[index % roomColors.length];
+    return (
+      <div style={{ background:`linear-gradient(135deg,${c1},${c2})`, width:"100%", height:"100%", display:"flex", alignItems:"center", justifyContent:"center", position:"relative" }}>
+        <div style={{ position:"absolute", inset:0, background:"radial-gradient(circle at 30% 40%,rgba(212,175,55,0.08),transparent 60%)" }} />
+        <span style={{ fontFamily:"'Cormorant Garamond',serif", color:"rgba(212,175,55,0.4)", fontSize:"0.6rem", letterSpacing:"0.3em", textTransform:"uppercase", textAlign:"center", padding:"0 1rem", position:"relative" }}>{label}</span>
+      </div>
+    );
+  }
+
+  /* ─── ORIENTATION SECTION ─── */
+  function OrientationSection({ lang }) {
+    const to = C[lang].orientation;
+    const isMob = useIsMobile();
+    const sunRays = Array.from({length: 12}, (_, i) => i);
+    return (
+      <section style={{ background:"#080808", padding: isMob?"4rem 1.25rem":"7rem clamp(2rem,6vw,6rem)", position:"relative", overflow:"hidden" }}>
+        <div style={{ position:"absolute", top:0, left:0, right:0, height:1, background:"linear-gradient(90deg,transparent,rgba(212,175,55,0.2),transparent)" }} />
+        {/* Decorative sun glow */}
+        <div style={{ position:"absolute", top:"50%", right: isMob?"-20%":"-5%", transform:"translateY(-50%)", width: isMob?300:500, height: isMob?300:500, borderRadius:"50%", background:"radial-gradient(circle,rgba(212,175,55,0.07) 0%,rgba(212,175,55,0.03) 40%,transparent 70%)", pointerEvents:"none" }} />
+        <div style={{ maxWidth:1200, margin:"0 auto", display:"grid", gridTemplateColumns: isMob?"1fr":"1fr 1fr", gap: isMob?"3rem":"6rem", alignItems:"center" }}>
+          {/* Text side */}
+          <div>
+            <p style={{ fontFamily:"'Cormorant Garamond',serif", color:"#d4af37", fontSize:"0.65rem", letterSpacing:"0.4em", textTransform:"uppercase", marginBottom:"1.1rem" }}>{to.label}</p>
+            <h2 style={{ fontFamily:"'Cormorant Garamond',serif", fontSize: isMob?"2.4rem":"clamp(2.5rem,4vw,4rem)", fontWeight:300, color:"#f5f0e8", lineHeight:0.95, marginBottom:"1.8rem" }}>
+              {to.title.split("\n").map((line,i)=>(
+                <span key={i} style={{ display:"block", fontStyle: i===1?"italic":"normal", color: i===1?"#d4af37":"#f5f0e8" }}>{line}</span>
+              ))}
+            </h2>
+            <p style={{ fontFamily:"'Crimson Pro',serif", color:"rgba(245,240,232,0.58)", lineHeight:1.85, fontSize:"1rem", fontWeight:300, marginBottom:"2.5rem" }}>{to.desc}</p>
+            {/* Stats grid */}
+            <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:"1.25rem" }}>
+              {to.stats.map(([val, label])=>(
+                <div key={label} style={{ padding:"1.1rem", border:"1px solid rgba(212,175,55,0.12)", background:"rgba(212,175,55,0.03)", borderRadius:2 }}>
+                  <div style={{ fontFamily:"'Cormorant Garamond',serif", fontSize: isMob?"1.5rem":"1.9rem", color:"#d4af37", fontWeight:300, lineHeight:1 }}>{val}</div>
+                  <div style={{ fontFamily:"'Crimson Pro',serif", fontSize:"0.58rem", letterSpacing:"0.2em", color:"rgba(245,240,232,0.3)", textTransform:"uppercase", marginTop:"0.3rem" }}>{label}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+          {/* Visual sun compass */}
+          <div style={{ display:"flex", alignItems:"center", justifyContent:"center", position:"relative", minHeight: isMob?280:380 }}>
+            {/* Compass ring */}
+            <div style={{ position:"relative", width: isMob?240:320, height: isMob?240:320 }}>
+              {/* Outer ring */}
+              <div style={{ position:"absolute", inset:0, borderRadius:"50%", border:"1px solid rgba(212,175,55,0.15)" }} />
+              <div style={{ position:"absolute", inset:16, borderRadius:"50%", border:"1px solid rgba(212,175,55,0.08)" }} />
+              {/* Sun rays */}
+              {sunRays.map(i=>{
+                const angle = (i * 30) - 90;
+                const rad = angle * Math.PI / 180;
+                const size = isMob ? 120 : 160;
+                const x1 = 50 + Math.cos(rad) * 38;
+                const y1 = 50 + Math.sin(rad) * 38;
+                const x2 = 50 + Math.cos(rad) * 48;
+                const y2 = 50 + Math.sin(rad) * 48;
+                const isMainRay = angle >= -120 && angle <= 60;
+                return (
+                  <svg key={i} style={{ position:"absolute", inset:0, width:"100%", height:"100%" }} viewBox="0 0 100 100">
+                    <line x1={x1} y1={y1} x2={x2} y2={y2}
+                      stroke={isMainRay ? "rgba(212,175,55,0.6)" : "rgba(212,175,55,0.12)"}
+                      strokeWidth={isMainRay ? "0.8" : "0.4"}
+                    />
+                  </svg>
+                );
+              })}
+              {/* Sun glow center */}
+              <div style={{ position:"absolute", top:"50%", left:"50%", transform:"translate(-50%,-50%)", width: isMob?80:110, height: isMob?80:110, borderRadius:"50%", background:"radial-gradient(circle,rgba(212,175,55,0.22) 0%,rgba(212,175,55,0.08) 50%,transparent 80%)", display:"flex", alignItems:"center", justifyContent:"center" }}>
+                <div style={{ width: isMob?44:58, height: isMob?44:58, borderRadius:"50%", background:"radial-gradient(circle,rgba(212,175,55,0.5),rgba(212,175,55,0.2))", border:"1px solid rgba(212,175,55,0.5)", display:"flex", alignItems:"center", justifyContent:"center" }}>
+                  <span style={{ fontSize: isMob?"1.3rem":"1.7rem" }}>☀</span>
+                </div>
+              </div>
+              {/* Cardinal labels */}
+              {[["N","top","50%","8%"],["S","bottom","50%","8%"],["E","right","92%","50%"],["O/W","left","4%","50%"]].map(([dir,,x,y])=>(
+                <div key={dir} style={{ position:"absolute", left:x, top:y, transform:"translate(-50%,-50%)", fontFamily:"'Cormorant Garamond',serif", fontSize:"0.6rem", letterSpacing:"0.15em", color: dir==="S"?"#d4af37":"rgba(245,240,232,0.2)", fontWeight: dir==="S"?600:300 }}>{dir}</div>
+              ))}
+              {/* South arrow */}
+              <svg style={{ position:"absolute", inset:0, width:"100%", height:"100%" }} viewBox="0 0 100 100">
+                <line x1="50" y1="50" x2="50" y2="82" stroke="#d4af37" strokeWidth="1.5" strokeLinecap="round"/>
+                <polygon points="50,86 47,79 53,79" fill="#d4af37"/>
+              </svg>
+            </div>
+            {/* Label below */}
+            <div style={{ position:"absolute", bottom:0, left:"50%", transform:"translateX(-50%)", textAlign:"center" }}>
+              <div style={{ fontFamily:"'Crimson Pro',serif", fontSize:"0.58rem", letterSpacing:"0.3em", color:"rgba(212,175,55,0.5)", textTransform:"uppercase" }}>
+                {lang==="cat"?"Façana principal orientada al sud":lang==="es"?"Fachada principal orientada al sur":"Main façade facing south"}
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    );
+  }
+
+  /* ─── BEFORE/AFTER SLIDER ─── */
+  function BASlider({ lang }) {
+    const tb = C[lang].ba;
+    const [pos,setPos] = useState(50);
+    const ref = useRef(null);
+    const active = useRef(false);
+    const isMob = useIsMobile();
+    const move = useCallback((cx)=>{
+      if(!ref.current) return;
+      const{left,width}=ref.current.getBoundingClientRect();
+      setPos(Math.max(0,Math.min(100,((cx-left)/width)*100)));
+    },[]);
+    useEffect(()=>{
+      const up=()=>{active.current=false;};
+      const mv=(e)=>{if(active.current)move(e.clientX);};
+      window.addEventListener("mousemove",mv);
+      window.addEventListener("mouseup",up);
+      return()=>{window.removeEventListener("mousemove",mv);window.removeEventListener("mouseup",up);};
+    },[move]);
+    return (
+      <div style={{ textAlign:"center", padding: isMob?"4rem 1.25rem":"6rem 2rem" }}>
+        <p style={{ fontFamily:"'Cormorant Garamond',serif", color:"#d4af37", fontSize:"0.65rem", letterSpacing:"0.4em", textTransform:"uppercase", marginBottom:"0.75rem" }}>{tb.subtitle}</p>
+        <h2 style={{ fontFamily:"'Cormorant Garamond',serif", fontSize: isMob?"1.9rem":"clamp(2rem,4vw,3.5rem)", fontWeight:300, color:"#f5f0e8", marginBottom:"2rem" }}>{tb.title}</h2>
+        {isMob && (
+          <div style={{ display:"flex", justifyContent:"center", gap:"0.4rem", marginBottom:"1.25rem" }}>
+            {[0,25,50,75,100].map(v=>(
+              <button key={v} onClick={()=>setPos(v)} style={{ background:Math.round(pos)===v?"#d4af37":"transparent", border:"1px solid rgba(212,175,55,0.4)", color:Math.round(pos)===v?"#0e0e0e":"#d4af37", fontFamily:"'Crimson Pro',serif", fontSize:"0.6rem", padding:"3px 9px", borderRadius:2, cursor:"pointer" }}>{v}%</button>
+            ))}
+          </div>
+        )}
+        <div ref={ref}
+          onMouseDown={(e)=>{active.current=true;e.preventDefault();}}
+          onTouchMove={(e)=>{e.preventDefault();move(e.touches[0].clientX);}}
+          tabIndex={0}
+          onKeyDown={(e)=>{if(e.key==="ArrowLeft")setPos(p=>Math.max(0,p-2));if(e.key==="ArrowRight")setPos(p=>Math.min(100,p+2));}}
+          aria-label="before after slider"
+          style={{ position:"relative", width:"100%", maxWidth: isMob?"100%":700, height: isMob?240:400, margin:"0 auto", cursor:"ew-resize", borderRadius:4, overflow:"hidden", userSelect:"none", touchAction:"none", border:"1px solid rgba(212,175,55,0.2)" }}>
+          <div style={{ position:"absolute", inset:0, background:"linear-gradient(135deg,#2c1810,#0d1b2a)", display:"flex", alignItems:"center", justifyContent:"center", flexDirection:"column", gap:"0.75rem" }}>
+            <div style={{ width:44, height:44, border:"1px solid rgba(212,175,55,0.3)", borderRadius:"50%", display:"flex", alignItems:"center", justifyContent:"center" }}><span style={{ color:"rgba(212,175,55,0.5)" }}>◻</span></div>
+            <span style={{ fontFamily:"'Cormorant Garamond',serif", color:"rgba(245,240,232,0.3)", fontSize:"0.6rem", letterSpacing:"0.3em" }}>{tb.before.toUpperCase()}</span>
+          </div>
+          <div style={{ position:"absolute", inset:0, clipPath:`inset(0 ${100-pos}% 0 0)`, background:"linear-gradient(135deg,#1b4332,#0f3460)", display:"flex", alignItems:"center", justifyContent:"center", flexDirection:"column", gap:"0.75rem" }}>
+            <div style={{ position:"absolute", inset:0, background:"radial-gradient(circle at 40% 50%,rgba(212,175,55,0.12),transparent 60%)" }} />
+            <div style={{ width:44, height:44, border:"1px solid rgba(212,175,55,0.5)", borderRadius:"50%", display:"flex", alignItems:"center", justifyContent:"center", position:"relative" }}><span style={{ color:"#d4af37" }}>✦</span></div>
+            <span style={{ fontFamily:"'Cormorant Garamond',serif", color:"rgba(245,240,232,0.6)", fontSize:"0.6rem", letterSpacing:"0.3em", position:"relative" }}>{tb.after.toUpperCase()}</span>
+          </div>
+          <div style={{ position:"absolute", top:0, bottom:0, left:`${pos}%`, transform:"translateX(-50%)", width:2, background:"#d4af37", pointerEvents:"none" }}>
+            <div style={{ position:"absolute", top:"50%", left:"50%", transform:"translate(-50%,-50%)", width:40, height:40, background:"#d4af37", borderRadius:"50%", display:"flex", alignItems:"center", justifyContent:"center", boxShadow:"0 4px 20px rgba(0,0,0,0.5)" }}>
+              <svg width="14" height="10" viewBox="0 0 16 10" fill="none"><path d="M5 5L1 2v6l4-3zm6 0l4-3v6l-4-3z" fill="#1a1208"/></svg>
+            </div>
+          </div>
+          <div style={{ position:"absolute", bottom:10, left:10, fontFamily:"'Cormorant Garamond',serif", color:"rgba(245,240,232,0.45)", fontSize:"0.55rem", letterSpacing:"0.2em", background:"rgba(0,0,0,0.55)", padding:"2px 8px", borderRadius:2 }}>{tb.before}</div>
+          <div style={{ position:"absolute", bottom:10, right:10, fontFamily:"'Cormorant Garamond',serif", color:"rgba(245,240,232,0.75)", fontSize:"0.55rem", letterSpacing:"0.2em", background:"rgba(0,0,0,0.55)", padding:"2px 8px", borderRadius:2 }}>{tb.after}</div>
+          <div style={{ position:"absolute", top:10, left:"50%", transform:"translateX(-50%)", fontFamily:"'Cormorant Garamond',serif", color:"#d4af37", fontSize:"0.6rem", background:"rgba(0,0,0,0.65)", padding:"2px 10px", borderRadius:20 }}>{Math.round(pos)}%</div>
+        </div>
+        <p style={{ marginTop:"1rem", fontFamily:"'Crimson Pro',serif", color:"rgba(245,240,232,0.28)", fontSize:"0.7rem" }}>← {tb.before} / {tb.after} →</p>
+      </div>
+    );
+  }
+
+  /* ─── CONTACT SECTION ─── */
+  function ContactSection({ lang }) {
+    const tc = C[lang].contact;
+    const isMob = useIsMobile();
+    return (
+      <section id="contact" style={{ background:"#0a0a0a", padding: isMob?"4rem 1.25rem":"7rem 2rem", position:"relative" }}>
+        <div style={{ position:"absolute", top:0, left:0, right:0, height:1, background:"linear-gradient(90deg,transparent,rgba(212,175,55,0.3),transparent)" }} />
+        <div style={{ maxWidth:680, margin:"0 auto", textAlign:"center" }}>
+          <div style={{ width:72, height:72, background:"rgba(37,211,102,0.1)", border:"1px solid rgba(37,211,102,0.3)", borderRadius:"50%", display:"flex", alignItems:"center", justifyContent:"center", margin:"0 auto 2rem" }}>
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="#25D366"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          </div>
+          <p style={{ fontFamily:"'Cormorant Garamond',serif", color:"#d4af37", fontSize:"0.65rem", letterSpacing:"0.4em", textTransform:"uppercase", marginBottom:"0.75rem" }}>{tc.subtitle}</p>
+          <h2 style={{ fontFamily:"'Cormorant Garamond',serif", fontSize: isMob?"2.2rem":"clamp(2.2rem,4vw,3.5rem)", fontWeight:300, color:"#f5f0e8", marginBottom:"1.5rem" }}>{tc.title}</h2>
+          <p style={{ fontFamily:"'Crimson Pro',serif", color:"rgba(245,240,232,0.55)", fontSize:"1.05rem", lineHeight:1.8, maxWidth:480, margin:"0 auto 2.5rem" }}>{tc.body}</p>
+          <a href={waLink(lang)} target="_blank" rel="noopener noreferrer" className="wa-btn" style={{ display:"inline-flex", alignItems:"center", justifyContent:"center", gap:"0.75rem", background:"#25D366", color:"#fff", fontFamily:"'Cormorant Garamond',serif", fontSize:"0.85rem", letterSpacing:"0.25em", textTransform:"uppercase", padding: isMob?"1rem 2rem":"1.1rem 3rem", borderRadius:3, textDecoration:"none", boxShadow:"0 4px 24px rgba(37,211,102,0.3)", width: isMob?"100%":"auto", transition:"all 0.25s" }}>
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+            {tc.waCta}
+          </a>
+          <div style={{ display:"flex", alignItems:"center", gap:"1.5rem", margin: isMob?"2rem 0 1.5rem":"2.5rem 0 2rem" }}>
+            <div style={{ flex:1, height:1, background:"rgba(212,175,55,0.1)" }} />
+            <span style={{ fontFamily:"'Crimson Pro',serif", color:"rgba(245,240,232,0.25)", fontSize:"0.7rem", letterSpacing:"0.2em" }}>{tc.divider}</span>
+            <div style={{ flex:1, height:1, background:"rgba(212,175,55,0.1)" }} />
+          </div>
+          <a href="tel:+376XXXXXXX" className="call-btn" style={{ display:"inline-flex", alignItems:"center", justifyContent:"center", gap:"0.75rem", background:"transparent", border:"1px solid rgba(212,175,55,0.3)", color:"#d4af37", fontFamily:"'Cormorant Garamond',serif", fontSize:"0.8rem", letterSpacing:"0.25em", textTransform:"uppercase", padding: isMob?"0.9rem 2rem":"0.9rem 2.5rem", borderRadius:3, textDecoration:"none", transition:"background 0.2s", width: isMob?"100%":"auto" }}>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="#d4af37"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1L6.6 10.8z"/></svg>
+            {tc.callBtn}
+          </a>
+          <p style={{ marginTop:"1.75rem", fontFamily:"'Crimson Pro',serif", color:"rgba(245,240,232,0.25)", fontSize:"0.75rem", letterSpacing:"0.15em" }}>{tc.hours}</p>
+        </div>
+      </section>
+    );
+  }
+
+  /* ─── MAIN APP ─── */
+  function App() {
+    const [lang,setLang] = useState("es");
+    const [scrolled,setScrolled] = useState(false);
+    const [menuOpen,setMenuOpen] = useState(false);
+    const [lightbox,setLightbox] = useState(null);
+    const t  = C[lang];
+    const th = t.hero;
+    const ts = t.specs;
+    const tg = t.gallery;
+    const tl = t.location;
+    const tf = t.footer;
+    const isMob = useIsMobile();
+
+    /* Build spec values dynamically using current lang */
+    const specValues = specValuesBase.map((v, i) => {
+      if (i === 1) return specGarageValues[lang]; // Garage
+      if (i === 5) return specFloorValues[lang];  // 1st+2nd floor
+      return v;
+    });
+
+    useEffect(()=>{
+      // Hide loading screen once React has mounted
+      const ls = document.getElementById('loading-screen');
+      if (ls) { ls.classList.add('hidden'); setTimeout(()=>{ ls.style.display='none'; }, 500); }
+    }, []);
+
+    useEffect(()=>{ const f=()=>setScrolled(window.scrollY>60); window.addEventListener("scroll",f); return()=>window.removeEventListener("scroll",f); },[]);
+    const scrollTo=(id)=>{ document.getElementById(id)?.scrollIntoView({behavior:"smooth"}); setMenuOpen(false); };
+    const navKeys=["property","gallery","location","contact"];
+
+    const WA_ICON = <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>;
+
+    /* FIX 3 — lang button styles: bigger and clearer */
+    const langBtnStyle = (l, mob) => ({
+      background: lang===l ? "rgba(212,175,55,0.2)" : "rgba(255,255,255,0.04)",
+      border: lang===l ? "1px solid rgba(212,175,55,0.6)" : "1px solid rgba(255,255,255,0.12)",
+      color: lang===l ? "#d4af37" : "rgba(245,240,232,0.5)",
+      padding: mob ? "5px 9px" : "4px 10px",
+      borderRadius: 3,
+      fontFamily: "'Crimson Pro',serif",
+      fontSize: mob ? "0.72rem" : "0.68rem",
+      letterSpacing: "0.1em",
+      textTransform: "uppercase",
+      cursor: "pointer",
+      transition: "all 0.2s",
+      minWidth: mob ? 36 : 34,
+      fontWeight: lang===l ? 600 : 300
+    });
+
+    return (
+      <div style={{ minHeight:"100vh" }}>
+
+        {/* ══ HEADER ══ */}
+        <header style={{ position:"fixed", top:0, left:0, right:0, zIndex:1000, padding: isMob?"0 1.25rem":"0 clamp(1.5rem,4vw,4rem)", background: scrolled||menuOpen?"rgba(8,8,8,0.97)":"transparent", backdropFilter: scrolled||menuOpen?"blur(18px)":"none", borderBottom: scrolled||menuOpen?"1px solid rgba(212,175,55,0.1)":"none", transition:"all 0.35s", display:"flex", alignItems:"center", height:66, justifyContent:"space-between" }}>
+          <button onClick={()=>scrollTo("hero")} style={{ background:"none", border:"none", cursor:"pointer", textAlign:"left", padding:0 }}>
+            <div style={{ fontFamily:"'Cormorant Garamond',serif", fontSize: isMob?"0.92rem":"1.05rem", letterSpacing:"0.15em", color:"#f5f0e8" }}>BEST HOMES C, S.L.</div>
+            <div style={{ fontFamily:"'Crimson Pro',serif", fontSize:"0.47rem", letterSpacing:"0.38em", color:"rgba(212,175,55,0.75)", marginTop:1, textTransform:"uppercase" }}>Coma del Quico · Sispony · La Massana</div>
+          </button>
+
+          {!isMob && (
+            <nav style={{ display:"flex", gap:"2.5rem", alignItems:"center" }}>
+              {navKeys.map(k=>(
+                <button key={k} className="nav-btn" onClick={()=>scrollTo(k)} style={{ background:"none", border:"none", color:"rgba(245,240,232,0.6)", fontFamily:"'Cormorant Garamond',serif", fontSize:"0.72rem", letterSpacing:"0.25em", textTransform:"uppercase", cursor:"pointer", transition:"color 0.2s" }}>{t.nav[k]}</button>
+              ))}
+              <div style={{ display:"flex", gap:"0.4rem", alignItems:"center", borderLeft:"1px solid rgba(212,175,55,0.18)", paddingLeft:"1.4rem" }}>
+                {["cat","es","en"].map(l=>(
+                  <button key={l} onClick={()=>setLang(l)} style={langBtnStyle(l, false)}>{l.toUpperCase()}</button>
+                ))}
+              </div>
+              <a href={waLink(lang)} target="_blank" rel="noopener noreferrer" className="cta-gold" style={{ border:"none", color:"#0e0e0e", fontFamily:"'Cormorant Garamond',serif", fontSize:"0.68rem", letterSpacing:"0.25em", textTransform:"uppercase", padding:"0.55rem 1.3rem", cursor:"pointer", textDecoration:"none", display:"inline-block" }}>{th.cta}</a>
+            </nav>
+          )}
+
+          {isMob && (
+            <div style={{ display:"flex", alignItems:"center", gap:"0.75rem" }}>
+              <div style={{ display:"flex", gap:"0.3rem", alignItems:"center" }}>
+                {["cat","es","en"].map(l=>(
+                  <button key={l} onClick={()=>setLang(l)} style={langBtnStyle(l, true)}>{l.toUpperCase()}</button>
+                ))}
+              </div>
+              <button onClick={()=>setMenuOpen(m=>!m)} aria-label="Menu" style={{ background:"none", border:"none", cursor:"pointer", padding:"6px", display:"flex", flexDirection:"column", gap:"5px" }}>
+                <span style={{ display:"block", width:21, height:"1.5px", background:"#d4af37", borderRadius:1, transition:"all 0.3s", transform: menuOpen?"translateY(6.5px) rotate(45deg)":"none" }} />
+                <span style={{ display:"block", width:21, height:"1.5px", background:"#d4af37", borderRadius:1, transition:"opacity 0.2s", opacity: menuOpen?0:1 }} />
+                <span style={{ display:"block", width:21, height:"1.5px", background:"#d4af37", borderRadius:1, transition:"all 0.3s", transform: menuOpen?"translateY(-6.5px) rotate(-45deg)":"none" }} />
+              </button>
+            </div>
+          )}
+        </header>
+
+        {/* ══ MOBILE DRAWER ══ */}
+        {isMob && (
+          <nav style={{ position:"fixed", top:66, left:0, right:0, background:"rgba(8,8,8,0.98)", backdropFilter:"blur(20px)", zIndex:999, padding:"1.5rem 1.25rem 2rem", transform: menuOpen?"translateY(0)":"translateY(-110%)", transition:"transform 0.35s cubic-bezier(0.4,0,0.2,1)", borderBottom:"1px solid rgba(212,175,55,0.1)" }}>
+            {navKeys.map(k=>(
+              <button key={k} className="mob-link" onClick={()=>scrollTo(k)} style={{ display:"block", width:"100%", background:"none", border:"none", borderBottom:"1px solid rgba(212,175,55,0.07)", color:"rgba(245,240,232,0.7)", fontFamily:"'Cormorant Garamond',serif", fontSize:"1.25rem", letterSpacing:"0.2em", textTransform:"uppercase", cursor:"pointer", padding:"1rem 0", textAlign:"left", transition:"color 0.2s" }}>{t.nav[k]}</button>
+            ))}
+            <a href={waLink(lang)} target="_blank" rel="noopener noreferrer" style={{ display:"flex", alignItems:"center", justifyContent:"center", gap:"0.6rem", background:"#25D366", color:"#fff", fontFamily:"'Cormorant Garamond',serif", fontSize:"0.7rem", letterSpacing:"0.25em", textTransform:"uppercase", padding:"0.9rem", cursor:"pointer", width:"100%", marginTop:"1.5rem", textDecoration:"none", borderRadius:3 }}>
+              {WA_ICON} {th.cta}
+            </a>
+          </nav>
+        )}
+
+        {/* ══ HERO ══ */}
+        <section id="hero" style={{ position:"relative", height:"100vh", minHeight:580, display:"flex", alignItems:"center", overflow:"hidden" }}>
+          <div style={{ position:"absolute", inset:0, background:"linear-gradient(135deg,#0a0f1a,#0e1a0e 40%,#1a0a05 70%,#0a0a0e)" }} />
+          <div style={{ position:"absolute", inset:0, background:"radial-gradient(ellipse 80% 60% at 60% 50%,rgba(212,175,55,0.05),transparent 70%)" }} />
+          <div style={{ position:"absolute", inset:0, backgroundImage:"linear-gradient(rgba(212,175,55,0.025) 1px,transparent 1px),linear-gradient(90deg,rgba(212,175,55,0.025) 1px,transparent 1px)", backgroundSize: isMob?"38px 38px":"60px 60px" }} />
+          <svg style={{ position:"absolute", bottom:0, left:0, right:0, width:"100%" }} viewBox="0 0 1440 300" preserveAspectRatio="none">
+            <path d="M0 300 L0 200 L120 160 L200 180 L350 90 L480 130 L600 60 L720 100 L840 40 L960 80 L1080 20 L1200 70 L1320 30 L1440 80 L1440 300Z" fill="rgba(0,0,0,0.55)" />
+            <path d="M0 300 L0 230 L180 200 L300 215 L440 155 L560 175 L680 115 L800 145 L920 85 L1040 115 L1160 65 L1280 105 L1440 55 L1440 300Z" fill="rgba(0,0,0,0.38)" />
+          </svg>
+          <div style={{ position:"absolute", bottom:0, left:0, right:0, height:"35%", background:"linear-gradient(to bottom,transparent,rgba(14,14,14,0.9))" }} />
+          <div style={{ position:"relative", zIndex:2, padding: isMob?"5rem 1.25rem 2rem":"0 clamp(2rem,8vw,10rem)", maxWidth:900, width:"100%" }}>
+            <div style={{ display:"flex", alignItems:"center", gap:"1rem", marginBottom: isMob?"1.25rem":"2rem" }}>
+              <div style={{ width: isMob?24:40, height:1, background:"#d4af37", flexShrink:0 }} />
+              <span style={{ fontFamily:"'Crimson Pro',serif", color:"#d4af37", fontSize: isMob?"0.58rem":"0.68rem", letterSpacing:"0.4em", textTransform:"uppercase" }}>{th.label}</span>
+            </div>
+            <h1 style={{ fontFamily:"'Cormorant Garamond',serif", fontSize: isMob?"clamp(3rem,15vw,4.5rem)":"clamp(4rem,10vw,9rem)", fontWeight:300, lineHeight:0.88, color:"#f5f0e8", marginBottom: isMob?"1.5rem":"2.5rem" }}>
+              {th.title.split("\n").map((line,i)=>(
+                <span key={i} style={{ display:"block", marginLeft: i===1?(isMob?"1.25rem":"clamp(2rem,6vw,6rem)"):0, fontStyle: i===1?"italic":"normal" }}>{line}</span>
+              ))}
+            </h1>
+            <p style={{ fontFamily:"'Crimson Pro',serif", fontSize: isMob?"0.95rem":"clamp(1rem,1.8vw,1.2rem)", color:"rgba(245,240,232,0.6)", maxWidth:520, lineHeight:1.8, marginBottom: isMob?"1.75rem":"3rem", fontWeight:300 }}>{th.subtitle}</p>
+            <div className="hero-btns" style={{ display:"flex", gap:"0.9rem", alignItems:"center", flexWrap:"wrap" }}>
+              <a href={waLink(lang)} target="_blank" rel="noopener noreferrer" className="cta-gold" style={{ border:"none", color:"#0e0e0e", fontFamily:"'Cormorant Garamond',serif", fontSize:"0.72rem", letterSpacing:"0.3em", textTransform:"uppercase", padding: isMob?"0.8rem 1.75rem":"0.9rem 2.5rem", cursor:"pointer", textDecoration:"none", display:"inline-block" }}>{th.cta}</a>
+              <button className="outline-btn" onClick={()=>scrollTo("property")} style={{ background:"none", border:"1px solid rgba(245,240,232,0.2)", color:"rgba(245,240,232,0.6)", fontFamily:"'Cormorant Garamond',serif", fontSize:"0.72rem", letterSpacing:"0.3em", textTransform:"uppercase", padding: isMob?"0.8rem 1.5rem":"0.9rem 2rem", cursor:"pointer" }}>{th.scroll}</button>
+            </div>
+          </div>
+        </section>
+
+        {/* ══ SPECS ══ */}
+        <section id="property" style={{ padding: isMob?"4rem 1.25rem":"8rem clamp(2rem,6vw,6rem)", background:"#0e0e0e", position:"relative" }}>
+          <div style={{ position:"absolute", top:0, left:0, right:0, height:1, background:"linear-gradient(90deg,transparent,rgba(212,175,55,0.3),transparent)" }} />
+          <div style={{ maxWidth:1200, margin:"0 auto" }}>
+            <div style={{ display:"grid", gridTemplateColumns: isMob?"1fr":"1fr 1fr", gap: isMob?"3rem":"5rem", alignItems:"start" }}>
+              <div>
+                <p style={{ fontFamily:"'Cormorant Garamond',serif", color:"#d4af37", fontSize:"0.65rem", letterSpacing:"0.4em", textTransform:"uppercase", marginBottom:"1.25rem" }}>{ts.sectionLabel}</p>
+                <h2 style={{ fontFamily:"'Cormorant Garamond',serif", fontSize: isMob?"2.2rem":"clamp(2.5rem,4vw,4rem)", fontWeight:300, color:"#f5f0e8", lineHeight:1, marginBottom:"2rem" }}>
+                  <em>{ts.heading1}</em><br/>{ts.heading2}
+                </h2>
+                <p style={{ fontFamily:"'Crimson Pro',serif", color:"rgba(245,240,232,0.6)", lineHeight:1.85, fontSize:"1rem", fontWeight:300, marginBottom:"1.25rem" }}>{ts.desc1}</p>
+                <p style={{ fontFamily:"'Crimson Pro',serif", color:"rgba(245,240,232,0.38)", lineHeight:1.85, fontSize:"1rem", fontWeight:300 }}>{ts.desc2}</p>
+                <div style={{ marginTop:"2.5rem", padding:"1.5rem", border:"1px solid rgba(212,175,55,0.15)", position:"relative" }}>
+                  <div style={{ position:"absolute", top:-1, left:36, right:36, height:1, background:"#d4af37" }} />
+                  <div style={{ fontFamily:"'Cormorant Garamond',serif", fontSize: isMob?"1.8rem":"2.5rem", fontWeight:300, color:"#d4af37" }}>{ts.priceValue}</div>
+                  <div style={{ fontFamily:"'Crimson Pro',serif", fontSize:"0.6rem", letterSpacing:"0.3em", color:"rgba(245,240,232,0.3)", textTransform:"uppercase", marginTop:"0.2rem" }}>{ts.priceLabel}</div>
+                </div>
+                <a href="memoria.html" target="_blank" rel="noopener noreferrer" style={{ display:"inline-flex", alignItems:"center", gap:"0.65rem", marginTop:"1.25rem", background:"transparent", border:"1px solid rgba(212,175,55,0.35)", color:"#d4af37", fontFamily:"'Cormorant Garamond',serif", fontSize:"0.7rem", letterSpacing:"0.28em", textTransform:"uppercase", padding:"0.75rem 1.5rem", borderRadius:3, textDecoration:"none", transition:"background 0.2s", width:"100%" }}>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#d4af37" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+                  {ts.memBtn}
+                </a>
+              </div>
+              <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:"1px", background:"rgba(212,175,55,0.1)", border:"1px solid rgba(212,175,55,0.1)" }}>
+                {specIcons.map((icon,i)=>(
+                  <div key={i} className="spec-card" style={{ background:"#0e0e0e", padding: isMob?"1.1rem":"1.5rem", borderBottom:"1px solid rgba(212,175,55,0.05)" }}>
+                    <div style={{ fontFamily:"'Cormorant Garamond',serif", fontSize:"1.15rem", color:"rgba(212,175,55,0.45)", marginBottom:"0.55rem" }}>{icon}</div>
+                    <div style={{ fontFamily:"'Crimson Pro',serif", fontSize:"0.5rem", letterSpacing:"0.25em", color:"rgba(245,240,232,0.28)", textTransform:"uppercase", marginBottom:"0.3rem" }}>{specLabels[lang][i]}</div>
+                    <div style={{ fontFamily:"'Cormorant Garamond',serif", fontSize: isMob?"1rem":"1.2rem", color:"#f5f0e8", lineHeight:1.3 }}>{specValues[i]}</div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* ══ ORIENTATION ══ */}
+        <OrientationSection lang={lang} />
+
+        {/* ══ GALLERY ══ */}
+        <section id="gallery" style={{ padding: isMob?"4rem 1rem":"7rem clamp(2rem,5vw,5rem)", background:"#080808", position:"relative" }}>
+          <div style={{ position:"absolute", top:0, left:0, right:0, height:1, background:"linear-gradient(90deg,transparent,rgba(212,175,55,0.2),transparent)" }} />
+          <div style={{ maxWidth:1300, margin:"0 auto" }}>
+            <div style={{ textAlign:"center", marginBottom: isMob?"2rem":"4rem" }}>
+              <p style={{ fontFamily:"'Cormorant Garamond',serif", color:"#d4af37", fontSize:"0.65rem", letterSpacing:"0.4em", textTransform:"uppercase", marginBottom:"0.75rem" }}>{tg.subtitle}</p>
+              <h2 style={{ fontFamily:"'Cormorant Garamond',serif", fontSize: isMob?"1.9rem":"clamp(2rem,4vw,3.5rem)", fontWeight:300, color:"#f5f0e8" }}>{tg.title}</h2>
+            </div>
+            <div style={{ display:"grid", gridTemplateColumns: isMob?"1fr 1fr":"repeat(auto-fill,minmax(270px,1fr))", gap: isMob?"0.4rem":"0.9rem" }}>
+              {tg.rooms.map((label,i)=>(
+                <div key={i} className="gthumb" style={{ position:"relative", aspectRatio:(!isMob&&i%5===0)?"16/9":"4/3", cursor:"pointer", overflow:"hidden", borderRadius:2, gridColumn:(!isMob&&i%5===0)?"span 2":"span 1" }} onClick={()=>setLightbox(i)}>
+                  <RoomBox index={i} label={label} />
+                  <div className="gover" style={{ position:"absolute", inset:0, background:"rgba(0,0,0,0.38)", display:"flex", alignItems:"center", justifyContent:"center" }}>
+                    <div style={{ width:36, height:36, border:"1px solid #d4af37", borderRadius:"50%", display:"flex", alignItems:"center", justifyContent:"center", color:"#d4af37" }}>+</div>
+                  </div>
+                  <div style={{ position:"absolute", bottom:0, left:0, right:0, padding:"1.25rem 0.65rem 0.55rem", background:"linear-gradient(to top,rgba(0,0,0,0.75),transparent)" }}>
+                    <span style={{ fontFamily:"'Cormorant Garamond',serif", color:"rgba(245,240,232,0.65)", fontSize: isMob?"0.55rem":"0.7rem", letterSpacing:"0.12em" }}>{label}</span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* ══ LIGHTBOX ══ */}
+        {lightbox !== null && (
+          <div style={{ position:"fixed", inset:0, background:"rgba(0,0,0,0.96)", zIndex:9999, display:"flex", alignItems:"center", justifyContent:"center", padding:"1rem" }} onClick={()=>setLightbox(null)}>
+            <div style={{ width:"min(800px,100%)", aspectRatio:"16/9", position:"relative" }} onClick={e=>e.stopPropagation()}>
+              <RoomBox index={lightbox} label={tg.rooms[lightbox]} />
+              <button onClick={()=>setLightbox(null)} style={{ position:"absolute", top:"0.7rem", right:"0.7rem", width:36, height:36, background:"rgba(0,0,0,0.65)", border:"1px solid rgba(212,175,55,0.35)", borderRadius:"50%", color:"#d4af37", fontSize:"1.1rem", cursor:"pointer", display:"flex", alignItems:"center", justifyContent:"center" }}>×</button>
+              <div style={{ position:"absolute", bottom:"0.7rem", left:0, right:0, display:"flex", justifyContent:"center", gap:"1.5rem", alignItems:"center" }}>
+                <button onClick={()=>setLightbox(g=>(g-1+tg.rooms.length)%tg.rooms.length)} style={{ width:36, height:36, background:"rgba(0,0,0,0.65)", border:"1px solid rgba(212,175,55,0.3)", borderRadius:"50%", color:"#d4af37", cursor:"pointer", display:"flex", alignItems:"center", justifyContent:"center" }}>‹</button>
+                <span style={{ fontFamily:"'Cormorant Garamond',serif", color:"rgba(245,240,232,0.45)", fontSize:"0.7rem", letterSpacing:"0.2em" }}>{lightbox+1} / {tg.rooms.length}</span>
+                <button onClick={()=>setLightbox(g=>(g+1)%tg.rooms.length)} style={{ width:36, height:36, background:"rgba(0,0,0,0.65)", border:"1px solid rgba(212,175,55,0.3)", borderRadius:"50%", color:"#d4af37", cursor:"pointer", display:"flex", alignItems:"center", justifyContent:"center" }}>›</button>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* ══ BEFORE/AFTER ══ */}
+        <section style={{ background:"#0a0a0a" }}><BASlider lang={lang} /></section>
+
+        {/* ══ LOCATION ══ */}
+        <section id="location" style={{ padding: isMob?"4rem 1.25rem":"7rem clamp(2rem,6vw,6rem)", background:"#0e0e0e" }}>
+          <div style={{ maxWidth:1200, margin:"0 auto", display:"grid", gridTemplateColumns: isMob?"1fr":"1fr 1fr", gap: isMob?"2.5rem":"5rem", alignItems:"center" }}>
+            <div>
+              <p style={{ fontFamily:"'Cormorant Garamond',serif", color:"#d4af37", fontSize:"0.65rem", letterSpacing:"0.4em", textTransform:"uppercase", marginBottom:"1.1rem" }}>{tl.parishLabel}</p>
+              <h2 style={{ fontFamily:"'Cormorant Garamond',serif", fontSize: isMob?"1.9rem":"clamp(2rem,3.5vw,3.5rem)", fontWeight:300, color:"#f5f0e8", marginBottom:"1.4rem", lineHeight:1.1 }}>
+                {tl.heading1}<br/><em>{tl.heading2}</em>
+              </h2>
+              <p style={{ fontFamily:"'Crimson Pro',serif", color:"rgba(245,240,232,0.52)", lineHeight:1.85, marginBottom:"2rem", fontSize:"0.95rem" }}>{tl.desc}</p>
+              <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:"1.1rem", marginBottom:"2rem" }}>
+                {tl.distances.map(([val,place])=>(
+                  <div key={place} style={{ borderLeft:"1px solid rgba(212,175,55,0.3)", paddingLeft:"0.8rem" }}>
+                    <div style={{ fontFamily:"'Cormorant Garamond',serif", fontSize: isMob?"1.4rem":"1.7rem", color:"#d4af37", fontWeight:300 }}>{val}</div>
+                    <div style={{ fontFamily:"'Crimson Pro',serif", fontSize:"0.65rem", color:"rgba(245,240,232,0.32)" }}>{place}</div>
+                  </div>
+                ))}
+              </div>
+              <a href="https://maps.app.goo.gl/X8Jp3qeSQ5vcPhjT8" target="_blank" rel="noopener noreferrer" className="maps-btn" style={{ display:"inline-flex", alignItems:"center", gap:"0.6rem", background:"transparent", border:"1px solid rgba(212,175,55,0.3)", color:"#d4af37", fontFamily:"'Cormorant Garamond',serif", fontSize:"0.7rem", letterSpacing:"0.25em", textTransform:"uppercase", padding:"0.7rem 1.5rem", borderRadius:3, textDecoration:"none", transition:"background 0.2s" }}>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="#d4af37"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+                {tl.mapsBtn}
+              </a>
+            </div>
+            {/* FIX 4 — corrected coordinates: 42°32'14.1"N 1°31'02.4"E = 42.537250, 1.517333 */}
+            <div style={{ height: isMob?280:420, borderRadius:4, border:"1px solid rgba(212,175,55,0.15)", overflow:"hidden", position:"relative" }}>
+              <iframe src="https://www.google.com/maps?q=42.537250,1.517333&z=16&output=embed" width="100%" height="100%" style={{ border:0, filter:"invert(90%) hue-rotate(180deg) saturate(0.7)" }} allowFullScreen="" loading="lazy" referrerPolicy="no-referrer-when-downgrade" title="Coma del Quico nº11.1, Sispony" />
+              <div style={{ position:"absolute", bottom:0, left:0, right:0, padding:"0.6rem 1rem", background:"rgba(8,8,8,0.85)", fontFamily:"'Crimson Pro',serif", color:"rgba(212,175,55,0.7)", fontSize:"0.6rem", letterSpacing:"0.18em" }}>{tl.mapCaption}</div>
+            </div>
+          </div>
+        </section>
+
+        {/* ══ CONTACT ══ */}
+        <ContactSection lang={lang} />
+
+        {/* ══ FOOTER ══ */}
+        <footer style={{ padding: isMob?"2rem 1.25rem":"3rem clamp(2rem,6vw,6rem)", background:"#050505", borderTop:"1px solid rgba(212,175,55,0.07)" }}>
+          <div style={{ maxWidth:1200, margin:"0 auto", display:"flex", flexDirection: isMob?"column":"row", justifyContent:"space-between", alignItems: isMob?"flex-start":"center", gap:"1.25rem" }}>
+            <div>
+              <div style={{ fontFamily:"'Cormorant Garamond',serif", fontSize:"0.95rem", letterSpacing:"0.15em", color:"#f5f0e8" }}>BEST HOMES C, S.L.</div>
+              <div style={{ fontFamily:"'Crimson Pro',serif", fontSize:"0.55rem", letterSpacing:"0.2em", color:"rgba(212,175,55,0.42)", marginTop:3 }}>{tf.address}</div>
+            </div>
+            <div style={{ display:"flex", gap:"1.5rem" }}>
+              {tf.legal.map(l=><a key={l} href="#" style={{ fontFamily:"'Crimson Pro',serif", fontSize:"0.6rem", letterSpacing:"0.2em", color:"rgba(245,240,232,0.22)", textDecoration:"none" }}>{l.toUpperCase()}</a>)}
+            </div>
+            <div style={{ fontFamily:"'Crimson Pro',serif", fontSize:"0.6rem", color:"rgba(245,240,232,0.18)" }}>© {new Date().getFullYear()} Best Homes C, S.L. — {tf.rights}</div>
+          </div>
+        </footer>
+
+        {/* ══ FLOATING BUTTONS ══ */}
+        <div style={{ position:"fixed", bottom: isMob?"1.1rem":"2rem", right: isMob?"1.1rem":"2rem", zIndex:999, display:"flex", flexDirection:"column", gap:"0.55rem" }}>
+          <a href={waLink(lang)} target="_blank" rel="noopener noreferrer" aria-label="WhatsApp" style={{ width: isMob?46:52, height: isMob?46:52, background:"#25D366", borderRadius:"50%", display:"flex", alignItems:"center", justifyContent:"center", textDecoration:"none", boxShadow:"0 4px 18px rgba(37,211,102,0.35)" }}>{WA_ICON}</a>
+          <a href="tel:+376XXXXXXX" aria-label="Llamar" style={{ width: isMob?46:52, height: isMob?46:52, background:"#d4af37", borderRadius:"50%", display:"flex", alignItems:"center", justifyContent:"center", textDecoration:"none", boxShadow:"0 4px 18px rgba(212,175,55,0.3)" }}>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="#0e0e0e"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1L6.6 10.8z"/></svg>
+          </a>
+        </div>
+      </div>
+    );
+  }
+
+  ReactDOM.createRoot(document.getElementById("root")).render(React.createElement(App));
+</script>
+</body>
+</html>
