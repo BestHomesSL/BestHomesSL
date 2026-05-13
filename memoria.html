@@ -38,6 +38,8 @@
     a { color: inherit; }
     button { font: inherit; }
     ::selection { background: rgba(215, 183, 96, .28); }
+    ::-webkit-scrollbar { width: 3px; }
+    ::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 2px; }
 
     .site-header {
       position: sticky;
@@ -329,31 +331,31 @@
 </head>
 <body>
   <header class="site-header">
-    <a class="brand" href="best-homes.html">
+    <a class="brand" href="index.html">
       <strong>BEST HOMES C, S.L.</strong>
       <span>Coma del Quico · Sispony · La Massana</span>
     </a>
     <div class="header-actions">
       <div class="lang-switch" id="langSwitch"></div>
-      <a class="back" href="best-homes.html">
+      <a class="back" href="index.html">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
-        <span data-i18n="back">Tornar</span>
+        <span id="backLabel">Tornar</span>
       </a>
     </div>
   </header>
 
   <main class="page">
     <section class="hero reveal">
-      <div class="eyebrow" data-i18n="heroLabel">Parcel·la nº11.1 · Coma del Quico · AD400 Sispony</div>
-      <h1><em data-i18n="heroTitle1">Memòria</em><br /><span data-i18n="heroTitle2">de Qualitats</span></h1>
-      <p class="lead" data-i18n="heroDesc">Especificació completa de tots els materials, marques i sistemes constructius que defineixen aquesta residència de prestigi.</p>
+      <div class="eyebrow" id="heroLabel">Parcel·la nº11.1 · Coma del Quico · AD400 Sispony</div>
+      <h1><em id="heroTitle1">Memòria</em><br /><span id="heroTitle2">de Qualitats</span></h1>
+      <p class="lead" id="heroDesc">Especificació completa de tots els materials, marques i sistemes constructius que defineixen aquesta residència de prestigi.</p>
     </section>
 
     <section class="surface-grid reveal" id="surfaceGrid" aria-label="Quadre de superfícies"></section>
     <nav class="toc reveal" id="toc" aria-label="Índex de seccions"></nav>
     <div id="sections"></div>
 
-    <aside class="note reveal" data-i18n-html="legalNote">
+    <aside class="note reveal" id="legalNote">
       <strong>Nota legal:</strong> La societat promotora es reserva el dret de canviar les qualitats anteriors per altres de similars o superiors en funció de les disponibilitats del mercat.
     </aside>
   </main>
@@ -379,7 +381,7 @@
           ["Equipament sanitari",[["Banys, dutxes i banyera","<span class='brand-name'>DURAVIT</span> o similar."],["Mampares","Vidre fix a les dutxes."],["Griferies","<span class='brand-name'>GROHE</span> o similar."]]],
           ["Instal·lacions",[["Calefacció i ACS","Aerotèrmia amb bomba de calor i terra radiant."],["Instal·lació elèctrica","Tub encastat, endolls i interruptors."],["Renovació d'aire","Renovació d'aire controlada."],["Televisió","Sortides per a TV al menjador, cuina i suites."],["Domòtica","Kit bàsic <span class='brand-name'>Loxone</span>: persianes, llums per planta, calefacció i vídeo porter via tablet."],["Ascensor","<span class='brand-name'>OTIS / ORONA</span> o similar. Adaptat per a cadira de rodes."]]],
           ["Llar de foc",[["Planta baixa","Pre-instal·lació de conducte per a llar de foc de llenya."],["Master Suite","Pre-instal·lació de llar de foc elèctrica."]]],
-          ["Spa & Gym",[["Sauna","Inclosa amb zona de dutxa i moble de bany."],["Gimnàs","Espai habilitat a la planta soterrani (294,78 m²), amb zona de vestuari."]]]
+          ["Spa & Gym — Wellness",[["Sauna","Inclosa amb zona de dutxa i moble de bany."],["Gimnàs","Espai habilitat a la planta soterrani (294,78 m²), amb zona de vestuari."]]]
         ],
         legalNote: "<strong>Nota legal:</strong> La societat promotora es reserva el dret de canviar les qualitats anteriors per altres de similars o superiors en funció de les disponibilitats del mercat."
       },
@@ -393,7 +395,7 @@
           ["Terreno","438,95 m²"],["Planta sótano","294,78 m²"],["Planta baja","126,40 m²"],["Primera planta","126,58 m²"],["Segunda planta","69,08 m²"],["Terraza","6,54 m²"],["Superficie total construida","616,84 m² + 6,54 m² terraza","total"]
         ],
         sections: [
-          ["Estructura y muros",[["Cimentación","Losa de hormigón armado."],["Cubiertas","Losa maciza con tijera de madera tipo pino país, clavada sobre listones de cubierta. Aislamiento térmico, acabado de pizarra y hierros corta-nieve."],["Muros de contención","Hormigón armado revestido con piedra del país."]]],
+          ["Estructura y muros",[["Cimentación","Losa de hormigón armado."],["Cubiertas","Losa maciza con tijera de madera tipo pino del país, clavada sobre listones de cubierta. Aislamiento térmico, acabado de pizarra y hierros corta-nieve."],["Muros de contención","Hormigón armado revestido con piedra del país."]]],
           ["Revestimientos exteriores",[["Fachadas y muros","Piedra del país combinada con acabados de madera negra <span class='brand-name'>Yakisugi</span>."]]],
           ["Revestimientos interiores",[["Paredes","Pintura plástica color blanco."],["Techos interiores","Falso techo de placa de yeso laminado sobre subestructura de acero galvanizado. En la planta de aparcamiento, hormigón visto."],["Baños","Gres porcelánico de primera calidad <span class='brand-name'>PORCELANOSA</span> o similar. Paredes no húmedas en pintura."],["Lavadero","Pintado."]]],
           ["Pavimentos",[["Interiores","Parqué de madera de roble natural <span class='brand-name'>KÄHRS</span> o similar. Baños en gres porcelánico <span class='brand-name'>PORCELANOSA</span> o similar."],["Terrazas y exteriores","Gres porcelánico imitación pizarra."],["Aparcamiento","Cemento y pintura epoxi gris."]]],
@@ -402,7 +404,7 @@
           ["Equipamiento sanitario",[["Baños, duchas y bañera","<span class='brand-name'>DURAVIT</span> o similar."],["Mamparas","Vidrio fijo en las duchas."],["Grifería","<span class='brand-name'>GROHE</span> o similar."]]],
           ["Instalaciones",[["Calefacción y ACS","Aerotermia con bomba de calor y suelo radiante."],["Instalación eléctrica","Tubo empotrado, enchufes e interruptores."],["Renovación de aire","Renovación de aire controlada."],["Televisión","Salidas para TV en comedor, cocina y suites."],["Domótica","Kit básico <span class='brand-name'>Loxone</span>: persianas, luces por planta, calefacción y videoportero vía tablet."],["Ascensor","<span class='brand-name'>OTIS / ORONA</span> o similar. Adaptado para silla de ruedas."]]],
           ["Chimenea",[["Planta baja","Pre-instalación de conducto para chimenea de leña."],["Master Suite","Pre-instalación de chimenea eléctrica."]]],
-          ["Spa & Gym",[["Sauna","Incluida con zona de ducha y mueble de baño."],["Gimnasio","Espacio habilitado en la planta sótano (294,78 m²), con zona de vestuario."]]]
+          ["Spa & Gym — Wellness",[["Sauna","Incluida con zona de ducha y mueble de baño."],["Gimnasio","Espacio habilitado en la planta sótano (294,78 m²), con zona de vestuario."]]]
         ],
         legalNote: "<strong>Nota legal:</strong> La sociedad promotora se reserva el derecho de cambiar las calidades anteriores por otras similares o superiores en función de las disponibilidades del mercado."
       },
@@ -417,7 +419,7 @@
         ],
         sections: [
           ["Structure & walls",[["Foundations","Reinforced concrete slab."],["Roof","Solid slab with country pine wood scissors nailed over roof slats. Thermal insulation, slate finish and snow-breaking irons."],["Retaining walls","Reinforced concrete covered with stone of Andorra."]]],
-          ["External coatings",[["Facades and walls","Stone of Andorra combined with black wood <span class='brand-name'>Yakisugi</span> finishes."]]],
+          ["External coatings",[["Façades and walls","Stone of Andorra combined with black wood <span class='brand-name'>Yakisugi</span> finishes."]]],
           ["Interior coatings",[["Walls","White plastic paint."],["Interior ceilings","False ceiling of plasterboard on galvanized steel substructure. Exposed concrete in the parking floor."],["Bathrooms","Top quality porcelain stoneware <span class='brand-name'>PORCELANOSA</span> or similar. Non-wet walls painted."],["Laundry","Painted."]]],
           ["Flooring",[["Interiors","Natural oak wood parquet <span class='brand-name'>KÄHRS</span> or similar. Bathrooms in porcelain stoneware <span class='brand-name'>PORCELANOSA</span> or similar."],["Terraces & exteriors","Slate-imitation porcelain stoneware."],["Parking","Concrete and grey epoxy paint."]]],
           ["Woodwork & windows",[["Exterior windows","Aluminium <span class='brand-name'>REYNAERS</span> or similar. Matt black finish, triple glazing with air chamber and thermal break."],["Shutters","Motorized lacquered aluminium in black."],["Interior doors","Main armoured door in white lacquered interior. All other doors in white lacquered finish."],["Wardrobes","Built-in, white lacquered <span class='brand-name'>Carre-Hulsta</span> or similar. Interior stair railing in laminated glass."],["Garage door","Motorized, electronically controlled (2 remote controls)."]]],
@@ -425,7 +427,7 @@
           ["Sanitary equipment",[["Bathrooms, showers & bathtub","<span class='brand-name'>DURAVIT</span> or similar."],["Shower screens","Fixed glass panels in showers."],["Taps & fittings","<span class='brand-name'>GROHE</span> or similar."]]],
           ["Facilities & installations",[["Heating & DHW","Aerothermal heat pump with underfloor heating."],["Electrical installation","Recessed conduit, sockets and switches."],["Air renewal","Controlled mechanical ventilation."],["Television","TV outlets in dining room, kitchen and suites."],["Home automation","Basic <span class='brand-name'>Loxone</span> kit: shutters, lighting per floor, heating and video doorbell via tablet."],["Lift","<span class='brand-name'>OTIS / ORONA</span> or similar. Wheelchair adapted."]]],
           ["Fireplace",[["Ground floor","Pre-installation of chimney flue for wood-burning fireplace."],["Master Suite","Pre-installation for electric fireplace."]]],
-          ["Spa & Gym",[["Sauna","Included with shower area and bathroom furniture."],["Gym","Dedicated space in the basement (294.78 m²), with changing room."]]]
+          ["Spa & Gym — Wellness",[["Sauna","Included with shower area and bathroom furniture."],["Gym","Dedicated space in the basement (294.78 m²), with changing room."]]]
         ],
         legalNote: "<strong>Legal note:</strong> The developer reserves the right to replace the above specifications with other similar or superior ones subject to market availability."
       }
@@ -438,8 +440,12 @@
       localStorage.setItem("bestHomesLang", lang);
       document.documentElement.lang = lang === "cat" ? "ca" : lang;
       const d = DATA[lang];
-      document.querySelectorAll("[data-i18n]").forEach((el) => el.textContent = d[el.dataset.i18n] || "");
-      document.querySelectorAll("[data-i18n-html]").forEach((el) => el.innerHTML = d[el.dataset.i18nHtml] || "");
+      document.getElementById("backLabel").textContent = d.back;
+      document.getElementById("heroLabel").textContent = d.heroLabel;
+      document.getElementById("heroTitle1").textContent = d.heroTitle1;
+      document.getElementById("heroTitle2").textContent = d.heroTitle2;
+      document.getElementById("heroDesc").textContent = d.heroDesc;
+      document.getElementById("legalNote").innerHTML = d.legalNote;
       renderLangButtons();
       renderSurfaces();
       renderSections();
